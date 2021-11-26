@@ -1,0 +1,119 @@
+{% extends "home/base.html" %} {% load static%} {% block title %} CONSULTANT {% endblock title %} {% block body_block %} {% if messages %}
+<ul>
+    {% for message in messages %}
+    <div class="alert alert-primary" role="alert">
+        {{message}}
+    </div>
+    {% endfor %}
+</ul>
+{% endif %}
+<div class="qurey_form">
+    <h2>CONSULTANT FORM<i class="fa fa-balance-scale" style="font-size:32px;color:black"></i> </h2>
+    <form action="#" method="post" action="{%url 'base'%}">
+        {% csrf_token %}
+        <label for="name">Name</label>
+        <input class="form_design" type="text" name="name" placeholder="Name" required>
+
+        <label for="email">Email</label>
+        <input class="form_design" type="email" name="email" placeholder="Email" required>
+
+        <label name="Aadhar" for="exampleInputAadharCard">Aadhar Card No.</label>
+        <input name="Aadhar" type="text" class="form-control" id="exampleInputAadharCard" placeholder="Enter Your Aadhar Card No." name="exampleInputAadharCard">
+        <button type="button" class="btn btn-primary" onclick="verify()">Verify</button>
+        <small id="message" class="form-text text-muted"></small>
+
+        <label for="DOB">date</label>
+        <input type="date" id="DOB" name="date">
+
+        <label for="Phone_number">Phone number</label>
+        <input class="form_design" type="text" name="Phone_number" placeholder="Phone number" required>
+
+        <label for="experience">Lawyer(law practice experience)</label>
+        <select id="experience" name="experience">
+            <option value="Fresher/Experience 1year">Fresher/Experience 1year</option>
+            <option value="above 1 year">above 1 year</option>
+            <option value="above 3 year">above 3 year</option>
+        </select>
+
+        <label for="City">City</label>
+        <input class="form_design" type="text" name="City" placeholder="City" required>
+
+        <label for="Father_Husband_Name">Father's name/Husband's name</label>
+        <input class="form_design" type="text" name="Father's_name/Husband's_name" placeholder="Father_Husband_Name" required>
+
+        <label for="Address">Address</label>
+        <input class="form_design" type="text" name="Address" placeholder="Address" required>
+
+        <label for="Birth_place">Birth place</label>
+        <input class="form_design" type="text" name="Birth_place" placeholder="Birth place" required>
+
+        <label for="Nationality">Nationality</label>
+        <input class="form_design" type="text" name="Nationality" placeholder="Nationality" required>
+
+        <label for="Gender">Gender</label>
+        <select id="Gender" name="Gender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+
+        <label for="Religion">Religion</label>
+        <input class="form_design" type="text" name="Religion" placeholder="Religion" required>
+
+        <label for="Language">Language</label>
+        <input class="form_design" type="text" name="Language" placeholder="Language" required>
+        <input class="form_design" type="submit">
+    </form>
+</div>
+
+
+<script type="text/javascript">
+    // multiplication table
+    const d = [
+        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+        [1, 2, 3, 4, 0, 6, 7, 8, 9, 5],
+        [2, 3, 4, 0, 1, 7, 8, 9, 5, 6],
+        [3, 4, 0, 1, 2, 8, 9, 5, 6, 7],
+        [4, 0, 1, 2, 3, 9, 5, 6, 7, 8],
+        [5, 9, 8, 7, 6, 0, 4, 3, 2, 1],
+        [6, 5, 9, 8, 7, 1, 0, 4, 3, 2],
+        [7, 6, 5, 9, 8, 2, 1, 0, 4, 3],
+        [8, 7, 6, 5, 9, 3, 2, 1, 0, 4],
+        [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+    ]
+
+    // permutation table
+    const p = [
+        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+        [1, 5, 7, 6, 2, 8, 3, 0, 9, 4],
+        [5, 8, 0, 3, 7, 9, 6, 1, 4, 2],
+        [8, 9, 1, 6, 0, 4, 3, 5, 2, 7],
+        [9, 4, 5, 3, 1, 2, 6, 8, 7, 0],
+        [4, 2, 8, 6, 5, 7, 3, 9, 0, 1],
+        [2, 7, 9, 3, 8, 0, 6, 4, 1, 5],
+        [7, 0, 4, 6, 9, 1, 3, 2, 5, 8]
+    ]
+
+    // validates Aadhar number received as string
+    function validate(aadharNumber) {
+        let c = 0
+        let invertedArray = aadharNumber.split('').map(Number).reverse()
+
+        invertedArray.forEach((val, i) => {
+            c = d[c][p[(i % 8)][val]]
+        })
+
+        return (c === 0)
+    }
+
+    function verify() {
+        var message = document.getElementById("message");
+        var aadharNo = document.getElementById("exampleInputAadharCard").value;
+        if (validate(aadharNo)) {
+            message.innerHTML = 'Your aadhar card no. valid';
+        } else {
+            message.innerHTML = 'Your aadhar card no. not valid';
+        }
+    }
+</script>
+
+{% endblock body_block %}
